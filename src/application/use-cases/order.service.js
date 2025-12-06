@@ -1,4 +1,5 @@
 const Order = require('../../domain/entities/order.entity');
+const { NotFoundError } = require('../../domain/errors');
 
 class OrderService {
     constructor(orderRepository) { // ¡Depende de la interfaz!
@@ -10,7 +11,11 @@ class OrderService {
     }
 
     async getOrderById(id) {
-        return this.orderRepository.getById(id);
+        const order = await this.orderRepository.getById(id);
+        if (!order) {
+            throw new NotFoundError('Order not found');
+        }
+        return order;
     }
 
     async createOrder(orderData) {
@@ -46,6 +51,12 @@ class OrderService {
     }
 
     async updateOrder(id, orderData) {
+        // Verificar que la orden existe
+        const existingOrder = await this.orderRepository.getById(id);
+        if (!existingOrder) {
+            throw new NotFoundError('Order not found');
+        }
+
         // Recalcular valores si se actualizan los items
         let subtotal = 0;
         let totalDiscount = 0;
@@ -77,6 +88,11 @@ class OrderService {
     }
 
     async deleteOrder(id) {
+        // Verificar que la orden existe
+        const existingOrder = await this.orderRepository.getById(id);
+        if (!existingOrder) {
+            throw new NotFoundError('Order not found');
+        }
         return this.orderRepository.delete(id);
     }
 }

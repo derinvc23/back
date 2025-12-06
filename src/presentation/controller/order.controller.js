@@ -11,11 +11,7 @@ class OrderController {
     getById = async (req, res) => {
         const { id } = req.params;
         const order = await this.orderService.getOrderById(id);
-        if (order) {
-            res.status(200).json(order);
-        } else {
-            res.status(404).json({ message: 'Order not found' });
-        }
+        res.status(200).json(order);
     }
 
     create = async (req, res) => {
@@ -26,11 +22,7 @@ class OrderController {
     update = async (req, res) => {
         const { id } = req.params;
         const order = await this.orderService.updateOrder(id, req.body);
-        if (order) {
-            res.status(200).json(order);
-        } else {
-            res.status(404).json({ message: 'Order not found' });
-        }
+        res.status(200).json(order);
     }
 
     delete = async (req, res) => {

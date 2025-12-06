@@ -1,16 +1,21 @@
 const Product = require('../../domain/entities/product.entity');
+const { NotFoundError } = require('../../domain/errors');
 
 class ProductService {
     constructor(productRepository) { // ¡Depende de la interfaz!
         this.productRepository = productRepository;
     }
-    
+
     async getAllProducts() {
         return this.productRepository.getAll();
     }
 
     async getProductById(id) {
-        return this.productRepository.getById(id);
+        const product = await this.productRepository.getById(id);
+        if (!product) {
+            throw new NotFoundError('Product not found');
+        }
+        return product;
     }
 
     async createProduct(productData) {
@@ -28,6 +33,12 @@ class ProductService {
     }
 
     async updateProduct(id, productData) {
+        // Verificar que el producto existe
+        const existingProduct = await this.productRepository.getById(id);
+        if (!existingProduct) {
+            throw new NotFoundError('Product not found');
+        }
+
         const productEntity = new Product(
             id,
             productData.name,
@@ -41,6 +52,11 @@ class ProductService {
     }
 
     async deleteProduct(id) {
+        // Verificar que el producto existe
+        const existingProduct = await this.productRepository.getById(id);
+        if (!existingProduct) {
+            throw new NotFoundError('Product not found');
+        }
         return this.productRepository.delete(id);
     }
 }
