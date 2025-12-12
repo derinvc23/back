@@ -47,6 +47,8 @@ const router = Router();
  *                     type: number
  *                   category:
  *                     type: string
+ *                   brand:
+ *                     type: string
  *                   imageUrl:
  *                     type: string
  */
@@ -85,6 +87,8 @@ router.get('/', asyncHandler(productController.getAll));
  *                   type: number
  *                 category:
  *                   type: string
+ *                 brand:
+ *                   type: string
  *                 imageUrl:
  *                   type: string
  *       404:
@@ -112,6 +116,7 @@ router.get('/:id', asyncHandler(productController.getById));
  *               - price
  *               - stock
  *               - category
+ *               - brand
  *             properties:
  *               name:
  *                 type: string
@@ -128,6 +133,9 @@ router.get('/:id', asyncHandler(productController.getById));
  *               category:
  *                 type: string
  *                 example: Electrónica
+ *               brand:
+ *                 type: string
+ *                 example: Samsung
  *               imageUrl:
  *                 type: string
  *                 example: https://example.com/laptop.jpg
@@ -168,6 +176,7 @@ router.post('/', [authenticateToken, isAdmin], asyncHandler(productController.cr
  *               - price
  *               - stock
  *               - category
+ *               - brand
  *             properties:
  *               name:
  *                 type: string
@@ -178,6 +187,8 @@ router.post('/', [authenticateToken, isAdmin], asyncHandler(productController.cr
  *               stock:
  *                 type: number
  *               category:
+ *                 type: string
+ *               brand:
  *                 type: string
  *               imageUrl:
  *                 type: string
