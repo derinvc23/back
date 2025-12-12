@@ -6,7 +6,7 @@ class Product {
         this.price = price;
         this.stock = stock;
         this.category = category;
-        this.brand = brand;
+        this.brand = brand; // Marca del producto Tarea Final
         this.imageUrl = imageUrl;
     }
 }
